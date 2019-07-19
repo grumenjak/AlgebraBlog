@@ -34,4 +34,17 @@ class Post extends Model
             ]
         ];
     }
+
+    public function getRouteKeyName(){
+
+        return 'slug';
+    }
+
+    // $post->comments
+    // Dohvati sve komentare vezane uz post
+    public function comments(){
+        //jedan post ima više komentara
+        return $this->hasMany(Comment::class);
+        //return $this->hasMany(Comment::class, 'post_id', 'id')  sa keyevima u tablici način tj ime kolumna
+    }
 }

@@ -14,12 +14,14 @@ class PostController extends Controller
                                     
     }
     public function index(){
-        $posts = Post::all();
+        
+       // $posts = Post::all();  //kad je funkcija all ne treba ->get(); za sve ostale treba!!!
+        $posts = Post::latest()->get() ;   //ovo poreda postove od najvonvijeg
         return view('posts.index', compact('posts'));
     }
 
-    public function show($id){
-        $post = Post::find($id);
+    public function show(Post $post){
+        //$post = Post::find($id);
         return view('posts.show', compact('post'));
     }
 
@@ -28,10 +30,6 @@ class PostController extends Controller
     }
 
     public function store(){
-        request()->validate([
-            'title' => 'required|min:3|max:255',
-            'body' => 'required|min:3|max:65535'
-        ]);
         Post::create([
             'title' => request('title'),
             'body' => request('body'),
@@ -45,6 +43,42 @@ class PostController extends Controller
         ]);
 
         return redirect()->route('posts.index')->withFlashMessage('Objava je dodana uspješno');
+  }
+  
+ 
+
+  public function edit(Post $post)
+  {
+      //$post = Post::find($id);
+      return view('posts.edit', compact('post'));
+  }
+  
+  public function update(Request $request, Post $post)
+  {
+              //dd($request);
+              $request->validate([
+                  'title' => 'required|string|max:255',
+                  'body' => 'required|min:3|max:65535'.$post->id
+               
+
+
+              ]);
+            
+              
+              $post->title = $request['title'];
+              $post->body = $request['body'];
+              //$post->user_id = auth()->id();
+              $post->slug = null;   //ovako kreira novi slug jer je možda promijenjen title
+              $post->save();
+
+              return redirect()->route('posts.index')->withFlashMessage("$post->title uspješno je ažuriran.");
+  }
+
+  public function destroy($id)
+  {
+      $post = Post::find($id);
+      $post->delete();
+      return redirect()->route('posts.index')->withFlashMessage("Post $post->title obrisan je uspješno.");
   }
 
 

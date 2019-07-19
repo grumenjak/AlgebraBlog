@@ -22,3 +22,9 @@ php artisan make:controller UserController -r
 php artisan migrate:refresh
 
 composer require cviebrock/eloquent-sluggable:^4.8
+
+php artisan make:model Comment -a
+
+//Dodaje polje user_id u comments table
+php artisan make:migration add_user_id_to_comments --table=comments
+

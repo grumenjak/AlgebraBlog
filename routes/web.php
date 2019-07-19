@@ -50,13 +50,25 @@ Route::get('/posts/create', 'PostController@create')->name('posts.create');
 
 //Dohvaćanje pojedinog posta
 Route::get('/posts', 'PostController@index')->name('posts.index');
-Route::get('/posts/{id}', 'PostController@show')->name('posts.show');
+Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
 
 
 
 // Spremi POST
 
 Route::post('/post', 'PostController@store')->name('posts.store');
+
+
+
+// prikaži formu za uređivanje POSTA
+Route::get('/posts/{post}/edit', 'PostController@edit')->name('posts.edit');
+
+// spremi uređenog POST u bazu
+Route::patch('/posts/{post}', 'PostController@update')->name('posts.update');
+
+// obriši Post
+Route::delete('/posts/{post}', 'PostController@destroy')->name('posts.destroy');
+
 
 
 
@@ -76,9 +88,9 @@ Route::delete('/users/{user}', 'UserController@destroy')->name('users.destroy');
 // prikaži jednog usera
 Route::get('/users/{user}', 'UserController@show')->name('users.show');
 
+//**************COMMENTS***********************
 
-
-
+Route::post('/posts/{post}/comments', 'CommentController@store')->name('comments.store');
 
 
     

@@ -133,4 +133,10 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->withFlashMessage("Korisnik $user->name obrisan je uspješno.");
     }
+
+      
+    // Dohvati sve komentare vezane uz usera
+    public function comments(){
+        return $this->hasMany(Comment::class,)
+    }
 }
