@@ -1,0 +1,5 @@
+napraviti dohvat napopularnijih postova, 
+odnosno upisati u bazu poglede za svaki post u kolonoi 'views'
+
+ako je taj post pogledan pripazite da se broj pogleda ne uvećava ako korisnik 
+nanovo učitava stranicu (što ne bi bili regularni novi pogledi)
