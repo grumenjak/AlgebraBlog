@@ -13,14 +13,18 @@
         {{ $post->created_at->toFormattedDateString() }} by<a href="#">{{ $post->user->name }}</a>
     </p>
     
+    @if (count($post->tags))
+        
     <section class="mb-3">
             <h6 class="d-inline">Tags:</h6>
             @foreach ($post->tags as $tag)
-                <a href="" $tag->name </a>
+                <a href="" class="badge badge-primary"> {{ $tag->name }} </a>
             @endforeach
 
     </section>
-    
+
+    @endif
+  
     <article class="text-justify">
         {{ $post->body }}
     </article>
