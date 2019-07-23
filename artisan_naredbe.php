@@ -28,3 +28,18 @@ php artisan make:model Comment -a
 //Dodaje polje user_id u comments table
 php artisan make:migration add_user_id_to_comments --table=comments
 
+//Mailgun instalacija
+composer require guzzlehttp/guzzle
+
+
+php artisan make:mail Welcome --markdown=emails.welcome
+
+//Ponovno povlači cache ako smo radili promjene u .env fajli
+php artisan config:cache
+
+//Kreiranje Tagova "-a" -a označava da kreira factory, model, migraciju
+php artisan make:model Tag -a
+\database\migrations\create_tags_tabel smo nadopunili
+php artisan migrate
+
+

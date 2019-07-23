@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Post;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Pri startupu da pokrene funkciju iz PostController.php
+        //inject u layouts/sidebar.blade.php i onda pozovi callback funkciju
+        view()->composer('layouts.sidebar', function($view){
+            $view->with('postsByViews', Post::orderBy('views', 'desc')->get()); 
+        });
     }
 }

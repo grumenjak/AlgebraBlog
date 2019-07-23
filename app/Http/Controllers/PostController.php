@@ -15,11 +15,14 @@ class PostController extends Controller
                                     
     }
     public function index(){
+
+        //$postsByViews = Post::orderby('views', 'desc')->get();
         
        // $posts = Post::all();  //kad je funkcija all ne treba ->get(); za sve ostale treba!!!
         $posts = Post::latest()->get() ;   //ovo sortira postove od najnovijeg
        // $posts = Post::get()->sortByDesc('views'); //ovo sortira po views iliti popularity
         return view('posts.index', compact('posts'));
+       // return view('posts.index', compact('posts', 'postsByViews'));
     }
 
     public function index2(){
@@ -32,6 +35,7 @@ class PostController extends Controller
 
     public function show(Post $post){
         //dd(session()->all());
+      /*MOJ NAČIN ZA DZ:
         $key = 'posts/'.$post->slug;
         if (!\Session::has($key)) {
 
@@ -39,8 +43,23 @@ class PostController extends Controller
            ->where('slug', $post->slug)
            ->increment('views', 1);
          \Session::put($key, 1);
+       }*/
+
+       $viewed = session()->get('viewed_posts', []);
+       
+       
+
+       if (!in_array($post->id, $viewed)) {
+           session()->push('viewed_posts', $post->id);
+           $post->increment('views');
+           $post->save();
        }
-     //   dd($Key);
+      // dd(session()->get('viewed_posts'));
+       /* OVAJ NAČIN nijedobar jer na refresh zbraja views
+       $views = $post->views;
+       $post->views = ++$views;
+       $post->save();*/
+
         return view('posts.show', compact('post'));
 
 
@@ -99,6 +118,9 @@ class PostController extends Controller
   {
       $post = Post::find($id);
       $post->delete();
+
+      // \Mail::to($user)->send(new Welcome($user));
+
       return redirect()->route('posts.index')->withFlashMessage("Post $post->title obrisan je uspješno.");
   }
 

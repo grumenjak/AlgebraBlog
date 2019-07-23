@@ -50,4 +50,13 @@ class Post extends Model
         return $this->hasMany(Comment::class);
         //return $this->hasMany(Comment::class, 'post_id', 'id')  sa keyevima u tablici način tj ime kolumna
     }
+    
+    // $post->tags
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public static function popular(){
+        return self::orderBy('views', 'desc')->limit(5)->get();
+    }
 }
