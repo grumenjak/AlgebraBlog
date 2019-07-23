@@ -32,13 +32,13 @@ class PostController extends Controller
 
     public function show(Post $post){
         //dd(session()->all());
-        $Key = 'posts/'.$post->slug;
-        if (!\Session::has($Key)) {
+        $key = 'posts/'.$post->slug;
+        if (!\Session::has($key)) {
 
         \DB::table('posts')
            ->where('slug', $post->slug)
            ->increment('views', 1);
-         \Session::put($Key, 1);
+         \Session::put($key, 1);
        }
      //   dd($Key);
         return view('posts.show', compact('post'));
