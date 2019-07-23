@@ -60,12 +60,14 @@
             <b>{{ $comment->user->name }}</b>
             <i>{{ $comment->created_at->diffForHumans() }}</i>
             <p>{{ $comment->body }}</p>
+            
         </li>
         @endforeach
     </ul>
 </div>
 @else
 <br>
+
 <p>Budi prvi koji će komentirati ovaj post</p>
 @endif
 <br>

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 
+
+
 class Post extends Model
 {
     protected $guarded = ['id'];
@@ -20,6 +22,7 @@ class Post extends Model
     //Updating your Eloquent Models
 
     use Sluggable;
+
 
     /**
      * Return the sluggable configuration array for this model.
