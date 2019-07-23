@@ -2,6 +2,8 @@
 
 @section('content')
 
+<a class="btn btn-outline-primary" href="{{  route('posts.index2') }}">Sort by popularity</a>
+<a class="btn btn-outline-primary" href="{{  route('posts.index') }}">Sort by date</a>
     @foreach($posts as $post)
         <div class="blog-post">
                     <h2 class="blog-post-title">
@@ -11,7 +13,7 @@
                     </h2>
                     <p class="blog-post-meta">
                         <!-- https://carbon.nesbot.com/docs/#api-formatting -->
-                        {{ $post->created_at->toFormattedDateString() }} by <a href="#">{{ $post->user->name }}</a>
+                        {{ $post->created_at->toFormattedDateString() }} by <a href="#">{{ $post->user->name }} </a> Viewed: <i>{{ $post->views }}</i> times
                     </p>
                     <article class="text-justify">
                         {{ $post->body }}

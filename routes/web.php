@@ -50,7 +50,13 @@ Route::get('/posts/create', 'PostController@create')->name('posts.create');
 
 //Dohvaćanje pojedinog posta
 Route::get('/posts', 'PostController@index')->name('posts.index');
+Route::get('/posts/popular', 'PostController@index2')->name('posts.index2');
+
+//Route::get('/posts', 'PostController@popularity')->name('posts.popularity');
+
 Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
+
+
 
 
 
@@ -91,7 +97,6 @@ Route::get('/users/{user}', 'UserController@show')->name('users.show');
 //**************COMMENTS***********************
 
 Route::post('/posts/{post}/comments', 'CommentController@store')->name('comments.store');
-
 
     
 Auth::routes();
