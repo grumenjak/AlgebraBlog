@@ -18,7 +18,7 @@
     <section class="mb-3">
             <h6 class="d-inline">Tags:</h6>
             @foreach ($post->tags as $tag)
-                <a href="" class="badge badge-primary"> {{ $tag->name }} </a>
+                <a href="{{ route('tags.index', $tag)  }}" class="badge badge-primary"> {{ $tag->name }} </a>
             @endforeach
 
     </section>

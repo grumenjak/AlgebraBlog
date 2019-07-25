@@ -6,7 +6,7 @@
 
         <div class="card-body">
 
-            <form method="POST" action="{{ route('posts.update', $post->id) }}">
+            <form method="POST" action="{{ route('posts.update', $post->slug) }}">
 
                 @csrf
                 @method('PATCH')
@@ -39,14 +39,37 @@
                     </div>
                 </div>
 
+                <div class="form-group mb-4">
+                    <h6>Oznake</h6>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-sm btn-primary float-right" data-toggle="modal" data-target="#addTag">
+                    Dodaj oznaku
+                    </button>
+                    @foreach ($tags as $tag)                    
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" class="custom-control-input" id="tag-{{ $tag->id }}" value="{{ $tag->id }}" name="tags[]"
+                            {{ $tag->posts->contains($post->id) ? 'checked' : ' ' }}> 
+                                
+                            <label class="custom-control-label" for="tag-{{ $tag->id }}">{{ $tag->name}} </label>
+                        </div>
+                    @endforeach
+                </div>
+
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <a href="{{ route('posts.show', $post->slug) }}" class="btn btn-primary">Natrag</a>
                         <button type="submit" class="btn btn-success float-right">Uredi</button>
                     </div>
                 </div>
+                @include('layouts.errors')
 
             </form>
         </div>
+
+        @include('tags.modal')
+
+      
+   
     </div>
 @endsection

@@ -16,11 +16,16 @@
             </ol>
           </div>
           <div class="sidebar-module">
-            <h4>Elsewhere</h4>
+            <h4>Oznake</h4>
             <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
+              @foreach ($tags as $tag)
+                  <li>
+                    <a href="{{ route('tags.index', $tag)  }}">
+                      {{ $tag }}
+                    </a>
+                  </li>
+              @endforeach
+
             </ol>
           </div>
         </div><!-- /.blog-sidebar -->

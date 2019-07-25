@@ -98,6 +98,16 @@ Route::get('/users/{user}', 'UserController@show')->name('users.show');
 
 Route::post('/posts/{post}/comments', 'CommentController@store')->name('comments.store');
 
+//**************TAGS***********************
+
+                              //app/http/controller/tagcorntroler.php u funkciju index pokazuje
+Route::get('/post/tags/{tag}', 'TagController@index')->name('tags.index');
+
+//spremanje posta
+Route::post('/tags', 'TagController@store')->name('tags.store');
+
+
+
     
 Auth::routes(['verify' => true]);
 

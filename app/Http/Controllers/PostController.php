@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Tag;
 
 
 class PostController extends Controller
@@ -66,11 +67,21 @@ class PostController extends Controller
     }
 
     public function create(){
-          return view('posts.create');
+
+        $tags = Tag::all();
+        return view('posts.create', compact('tags'));
     }
 
     public function store(){
-        Post::create([
+
+        request()->validate([
+            'title' => 'required|min:3|max:255',
+            'body' => 'required|min:3',
+            'tags' => 'required'
+        ]);
+
+        //dd(request('tags'));
+        $post = Post::create([
             'title' => request('title'),
             'body' => request('body'),
             'user_id' => auth()->id(),
@@ -78,9 +89,11 @@ class PostController extends Controller
             // Koristimo sluggable plugin umjesto gornje naredbe  \app\Post.php
             // https://github.com/cviebrock/eloquent-sluggable
             // $ composer require cviebrock/eloquent-sluggable:^4.8
-
-
+       
         ]);
+
+        $tags = request('tags');
+        $post->tags()->attach($tags);
 
         return redirect()->route('posts.index')->withFlashMessage('Objava je dodana uspješno');
   }
@@ -89,8 +102,10 @@ class PostController extends Controller
 
   public function edit(Post $post)
   {
+
+        $tags = Tag::all();
       //$post = Post::find($id);
-      return view('posts.edit', compact('post'));
+      return view('posts.edit', compact('post', 'tags'));
   }
   
   public function update(Request $request, Post $post)
@@ -98,7 +113,9 @@ class PostController extends Controller
               //dd($request);
               $request->validate([
                   'title' => 'required|string|max:255',
-                  'body' => 'required|min:3|max:65535'.$post->id
+                  'body' => 'required|min:3|max:65535',
+                  'tags' => 'required'
+
                
 
 
@@ -110,6 +127,8 @@ class PostController extends Controller
               //$post->user_id = auth()->id();
               $post->slug = null;   //ovako kreira novi slug jer je možda promijenjen title
               $post->save();
+
+              $post->tags()->sync($request['tags']);
 
               return redirect()->route('posts.index')->withFlashMessage("$post->title uspješno je ažuriran.");
   }
